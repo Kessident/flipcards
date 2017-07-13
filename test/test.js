@@ -16,20 +16,37 @@ describe ("Users ", function() {
     })
     .expect(201)
     .expect(function (res) {
-      assert.equal(res.text, "Created. Redirecting to /");
+      assert.equal(res.text, "Created. Redirecting to /signin");
     })
     .end(done);
   });
-
   it("should not be able to register if missing info", function (done) {
     request(app).post("/signup").send({}).expect(400)
     .expect(function (res) {
       assert.equal(res.text, "Bad Request. Redirecting to /signup");
     }).end(done);
   });
-  // it("Users should be able to login", function(done) {
-  //   request(app).get
-  // });
+
+  it("should be able to login", function(done) {
+    request(app).post("/signin")
+    .send({
+      username:"testUser1",
+      password:"password"
+    }).expect(302)
+    .expect(function (res) {
+      assert.equal(res.text, "Found. Redirecting to /");
+    }).end(done);
+  });
+  it("should not be able to login with invalid information", function(done) {
+    request(app).post("/signin")
+    .send({
+      username:"I do not exists",
+      password:"non existant"
+    }).expect(401)
+    .expect(function (res) {
+      assert.equal(res.text, "Unauthorized. Redirecting to /signin");
+    }).end(done);
+  });
   // it("Users should be able to logout", function(done) {
   //   tests here
   // });
