@@ -58,7 +58,8 @@ router.post("/signup", function(req, res){
 });
 
 router.post("/logout", function(req, res){
-  res.redirect("/");
+  req.session.destroy();
+  res.redirect(200, "/signin");
 });
 
 module.exports = router;

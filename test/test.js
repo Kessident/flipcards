@@ -47,9 +47,14 @@ describe ("Users ", function() {
       assert.equal(res.text, "Unauthorized. Redirecting to /signin");
     }).end(done);
   });
-  // it("Users should be able to logout", function(done) {
-  //   tests here
-  // });
+
+
+  it("should be able to logout", function(done) {
+    request(app).post("/logout").expect(200)
+    .expect(function (res) {
+      assert.equal(res.headers.location, "/signin");
+    }).end(done);
+  });
 
   // Allow the user to create multiple decks of flipcards
   // Allow the user to create flipcards within a deck
