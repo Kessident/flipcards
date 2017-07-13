@@ -5,9 +5,12 @@ mongoose.Promise = require('bluebird');
 mongoose.connect(config.mongoURL);
 
 const userSchema = new mongoose.Schema({
-  id: {type: Number, required: true, unique: true, default: 1},
   username: { type: String, required: true, unique: true},
-  password: { type: String, required: true},
+  password: {
+    hash: { type: String, required: true},
+    salt: { type: String, required: true},
+    iterations: { type: Number, required: true}
+  },
   decks: [{
     name: {type: String, default: "New Deck"},
     cards: [{

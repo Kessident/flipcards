@@ -36,3 +36,5 @@ if (require.main === module){
     console.log("server running on localhost:" + app.get('port'));
   });
 }
+
+module.exports = app;
