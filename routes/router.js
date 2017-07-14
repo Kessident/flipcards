@@ -19,7 +19,7 @@ router.post("/signin", function(req, res){
   Users.findOne({username:req.body.username})
   .then(function(user){
     if (user){
-      let isPassCorrect = Util.hash.compare(user.password, req.body.password);
+      let isPassCorrect = Util.password.compare(user.password, req.body.password);
       if (isPassCorrect){
         req.session.username = user.username;
         res.redirect("/");
@@ -38,7 +38,7 @@ router.get("/signup", function(req, res){
 
 router.post("/signup", function(req, res){
   if (req.body.username && req.body.password){
-    let hashData = Util.hash.hash(req.body.password);
+    let hashData = Util.password.hash(req.body.password);
     Users.create({
       username: req.body.username,
       password: hashData
